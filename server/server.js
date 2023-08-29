@@ -9,7 +9,7 @@ app.use(bodyParser.json())
 
 app.use('/api', api)
 app.get('/', (req, res) => {
-    res.send('Hello from server!')
+    res.send('Hello from the only server!')
 })
 
 app.listen(PORT, () => {
