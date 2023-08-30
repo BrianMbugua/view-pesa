@@ -1,6 +1,6 @@
 const express = require('express');
 const {Router} = require('express');
-const bcryptjs = require('bcryptjs');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
@@ -17,10 +17,13 @@ router.post('/register', async(req, res) => {
    let email = req.body.email
    let password = req.body.password
 
+   const salt = await bcrypt.genSalt(10)
+   const hashedPassword = await bcrypt.hash(password, salt)
+
    const user = new User({
     username: username,
     email: email,
-    password: password
+    password: hashedPassword
    })
 
    const result = await user.save()
