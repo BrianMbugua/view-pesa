@@ -9,7 +9,8 @@ const api = require('./routes/api')
 const app = express()
 
 //allows the application to receive json data
-app.use(bodyParser.json())
+app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: false }));
 
 
 app.use('/api', api)
@@ -65,6 +66,19 @@ app.put('/users/:id', async(req, res) => {
     }
 })
 
+//delete a user
+app.delete('/users/:id', async(req, res) => {
+    try {
+        const {id} = req.params;
+        const user = await User.findByIdAndDelete(id);
+        if(!user) {
+            return res.status(404).json({message: `User with ID ${id} not found`})
+        }
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+})
 
 mongoose.connect('mongodb+srv://morian:x9zory5ZpLtFbAP3@moriandb.wqca4nl.mongodb.net/MorianDB?retryWrites=true&w=majority')
 .then(() => {
