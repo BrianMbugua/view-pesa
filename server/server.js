@@ -1,16 +1,37 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 const User = require('./models/userModel');
 
 const PORT = 3000
-const api = require('./routes/api')
-const app = express()
+const api = require('./routes/routes');
+const app = express();
 
 //allows the application to receive json data
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cors({
+    credentials:true,
+    origin: ['http://localhost:4200']
+}
+
+));
+app.use(cookieParser());
+
+
+//Connect to MongoDB
+mongoose.connect('mongodb+srv://morian:x9zory5ZpLtFbAP3@moriandb.wqca4nl.mongodb.net/MorianDB?retryWrites=true&w=majority')
+.then(() => {
+
+    app.listen(PORT, () => {
+        console.log(`Server running on port: ${PORT}`)
+    })
+    console.log('Connected to MongoDB')
+}).catch((err) =>{
+    console.log(err)
+})
 
 
 app.use('/api', api)
@@ -80,14 +101,3 @@ app.delete('/users/:id', async(req, res) => {
     }
 })
 
-mongoose.connect('mongodb+srv://morian:x9zory5ZpLtFbAP3@moriandb.wqca4nl.mongodb.net/MorianDB?retryWrites=true&w=majority')
-.then(() => {
-
-    app.listen(PORT, () => {
-        console.log(`Server running on port: ${PORT}`)
-    })
-
-    console.log('Connected to MongoDB')
-}).catch((err) =>{
-    console.log(err)
-})
