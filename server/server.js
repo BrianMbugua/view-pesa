@@ -50,6 +50,21 @@ app.post('/users', async(req, res) => {
     }
 })
 
+//update a user
+app.put('/users/:id', async(req, res) => {
+    try {
+        const {id} = req.params;
+        const user = await User.findByIdAndUpdate(id, req.body);
+        if(!user) {
+            return res.status(404).json({message: `User with ID ${id} not found`})
+        }
+        const updatedUser = await User.findById(id);
+        res.status(200).json(updatedUser);
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+})
+
 
 mongoose.connect('mongodb+srv://morian:x9zory5ZpLtFbAP3@moriandb.wqca4nl.mongodb.net/MorianDB?retryWrites=true&w=majority')
 .then(() => {
