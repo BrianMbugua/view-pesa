@@ -28,6 +28,17 @@ export class RegisterComponent implements OnInit {
       })
     }
 
+    ValidateEmail = (email:any)=>{
+
+      const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+      if (email.match(validRegex)) {
+        return true;
+      }else{
+        return false;
+      }
+    }
+
     submit():void{
       let user = this.form.getRawValue();
       console.log(user);
@@ -35,6 +46,11 @@ export class RegisterComponent implements OnInit {
       if(user.name == "" || user.email == "" || user.password == ""){
         Swal.fire("Error", "Please enter all the required fields", "error")
       }
+      else if (!this.ValidateEmail(user.email)){
+        Swal.fire("Error", "Please enter a valid email", "error")
+       
+    }else{
+
     }
   }
-
+}
