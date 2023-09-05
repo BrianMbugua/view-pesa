@@ -23,31 +23,33 @@ router.post('/register', async (req, res) => {
     //find if user exists using the email entered during registration
     const record = await User.findOne({ email: email })
     if (record) {
-        return res.status(400).json({ error: "Email already registered" })
-    }
-    else {
+        return res.status(400).json({ message: "Email already registered" })
+    } else {
         const user = new User({
             username: username,
             email: email,
             password: hashedPassword
+        });
+
+        //save to DB
+        const result = await user.save()
+
+        //JWT token
+        const { _id } = await result.toJSON()
+        const token = jwt.sign({ _id: _id }, "secretXLR")
+
+        res.cookie("jwt", token, {
+            httpOnly: true,
+            maxAge: 12 * 60 * 60 * 1000
         })
+
+        res.send({
+            message: "success"
+        })
+
     }
 
-    //save to DB
-    const result = await user.save()
 
-    //JWT token
-    const { _id } = await result.toJSON()
-    const token = jwt.sign({ _id: _id }, "secretXLR")
-
-    res.cookie("jwt", token, {
-        httpOnly: true,
-        maxAge: 12 * 60 * 60 * 1000
-    })
-
-    res.send({
-        message:"success"
-    })
 
 })
 
@@ -56,7 +58,24 @@ router.post('/login', async (req, res) => {
 })
 
 router.get('/user', async (req, res) => {
-    res.send("User endpoint OK")
+    try {
+        const cookies = req.cookies['jwt']
+
+        const claims = jwt.verify(cookies, "secretXLR")
+
+        if(!claims) {
+            return res.status(401).json({ message: "Unauthorized" })
+        }
+
+        const user = await User.findOne({_id: claims._id})
+
+        const { password,...data} = await user.toJSON()
+
+        res.send(data);
+
+    } catch (err) {
+        return res.status(401).send({ message: "Unauthenticated" })
+    }
 })
 
 module.exports = router

@@ -17,40 +17,42 @@ export class RegisterComponent implements OnInit {
     private formBuilder: FormBuilder,
     private http: HttpClient,
     private router: Router
-  ){
+  ) {
   }
 
-    ngOnInit():void{
-      this.form = this.formBuilder.group({
-        username:"",
-        email: "",
-        password: ""
-      })
+  ngOnInit(): void {
+    this.form = this.formBuilder.group({
+      username: "",
+      email: "",
+      password: ""
+    })
+  }
+
+  ValidateEmail = (email: any) => {
+
+    const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+    if (email.match(validRegex)) {
+      return true;
+    } else {
+      return false;
     }
+  }
 
-    ValidateEmail = (email:any)=>{
+  submit(): void {
+    let user = this.form.getRawValue();
+    console.log(user);
 
-      const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-
-      if (email.match(validRegex)) {
-        return true;
-      }else{
-        return false;
-      }
+    if (user.name == "" || user.email == "" || user.password == "") {
+      Swal.fire("Error", "Please enter all the required fields", "error")
     }
-
-    submit():void{
-      let user = this.form.getRawValue();
-      console.log(user);
-
-      if(user.name == "" || user.email == "" || user.password == ""){
-        Swal.fire("Error", "Please enter all the required fields", "error")
-      }
-      else if (!this.ValidateEmail(user.email)){
-        Swal.fire("Error", "Please enter a valid email", "error")
-       
-    }else{
-
+    else if (!this.ValidateEmail(user.email)) {
+      Swal.fire("Error", "Please enter a valid email", "error")
+    } else {
+      this.http.post("http://localhost:3000/api/register", user, { withCredentials: true })
+        .subscribe(() => this.router.navigate(['/']), (err) => {
+          Swal.fire("Error", err.error.message, "error")
+        })
     }
   }
 }
