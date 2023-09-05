@@ -1,1 +1,7 @@
-<p>login works!</p>
+<form [formGroup]="form" (submit)="submit()">
+    <h1 class="h3 mb-3 fw-normal">Login</h1>
+    <!-- <input formControlName="username" class="form-control" placeholder="Username" required> -->
+    <input formControlName="email" type="email" class="form-control" placeholder="Email" required>
+    <input formControlName="password" type="password" class="form-control" placeholder="Password" required>
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Login</button>
+</form>

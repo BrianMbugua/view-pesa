@@ -54,7 +54,29 @@ router.post('/register', async (req, res) => {
 })
 
 router.post('/login', async (req, res) => {
-    res.send("Login endpoint OK")
+    const user = await User.findOne({ email: req.body.email })
+    if (!user) {
+        return res.status(404).send({
+            message: "Email is incorrect",
+        })
+    }
+
+    if (!(await bcrypt.compare(req.body.password, user.password))) {
+        return res.status(400).send({
+            message: "Password is Incorrect",
+        })
+    }
+ 
+    const token = jwt.sign({ _id: user._id }, "secretXLR");
+
+    res.cookie("jwt", token, {
+        httpOnly: true,
+        maxAge: 24 * 60 * 60 * 1000  // 24 hours in milliseconds
+    })
+
+    res.send({
+        message: "success"
+    })
 })
 
 router.get('/user', async (req, res) => {
@@ -63,19 +85,27 @@ router.get('/user', async (req, res) => {
 
         const claims = jwt.verify(cookies, "secretXLR")
 
-        if(!claims) {
+        if (!claims) {
             return res.status(401).json({ message: "Unauthorized" })
         }
 
-        const user = await User.findOne({_id: claims._id})
+        const user = await User.findOne({ _id: claims._id })
 
-        const { password,...data} = await user.toJSON()
+        const { password, ...data } = await user.toJSON()
 
         res.send(data);
 
     } catch (err) {
         return res.status(401).send({ message: "Unauthenticated" })
     }
+})
+
+router.post('/logout', (req, res) => {
+    res.cookie("jwt", "", { maxAge: 0 })
+
+    res.send({
+        message: "success"
+    })
 })
 
 module.exports = router

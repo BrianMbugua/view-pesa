@@ -43,7 +43,7 @@ export class RegisterComponent implements OnInit {
     let user = this.form.getRawValue();
     console.log(user);
 
-    if (user.name == "" || user.email == "" || user.password == "") {
+    if (user.username == "" || user.email == "" || user.password == "") {
       Swal.fire("Error", "Please enter all the required fields", "error")
     }
     else if (!this.ValidateEmail(user.email)) {

@@ -17,4 +17,9 @@ export class NavComponent {
       this.authenticated = auth;
     })
   }
+
+  logout():void {
+    this.http.post("http://localhost:3000/api/register",{},{withCredentials: true})
+    .subscribe(()=> this.authenticated = false)
+  }
 }
