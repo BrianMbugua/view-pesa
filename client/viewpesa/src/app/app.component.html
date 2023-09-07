@@ -1,5 +1,9 @@
 <app-nav></app-nav>
-
-<main class="form-signin">
+<app-sidenav (onToggleSidenav)="onToggleSidenav($event)"></app-sidenav>
+<app-home>
+  [collapsed] = "isSideNavCollapsed"
+  [screenWidth] = "screenWidth"
+</app-home>
+<!-- <main class="form-signin">
   <router-outlet></router-outlet>
-</main>
+</main> -->

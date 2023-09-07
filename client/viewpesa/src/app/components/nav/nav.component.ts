@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { Emitters } from 'src/app/emitters/emitter';
+import { Emitters } from 'src/app/components/emitters/emitter';
 
 @Component({
   selector: 'app-nav',

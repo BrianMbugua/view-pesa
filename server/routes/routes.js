@@ -40,7 +40,7 @@ router.post('/register', async (req, res) => {
 
         res.cookie("jwt", token, {
             httpOnly: true,
-            maxAge: 12 * 60 * 60 * 1000
+            maxAge: 6 * 60 * 60 * 1000
         })
 
         res.send({
@@ -71,12 +71,16 @@ router.post('/login', async (req, res) => {
 
     res.cookie("jwt", token, {
         httpOnly: true,
-        maxAge: 24 * 60 * 60 * 1000  // 24 hours in milliseconds
+        maxAge: 6 * 60 * 60 * 1000  // 24 hours in milliseconds
     })
 
     res.send({
         message: "success"
     })
+})
+
+router.get('/transactions', (req, res) => {
+    res.send('Server root OK')
 })
 
 router.get('/user', async (req, res) => {

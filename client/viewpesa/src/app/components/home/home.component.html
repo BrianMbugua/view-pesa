@@ -1,1 +1,6 @@
-{{message}}
+
+<div class="home" [ngClass]="getHomeClass()">
+    <router-outlet></router-outlet>
+    
+    {{message}}
+</div>
