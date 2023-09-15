@@ -71,7 +71,7 @@
         width: 100%;
         margin-bottom: 0.625rem;
 
-        .sidenav-nav-link {
+        .sidenav-nav-link{
             display: flex;
             align-items: center;
             height: 3rem;

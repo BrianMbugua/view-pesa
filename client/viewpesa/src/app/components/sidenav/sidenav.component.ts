@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { navbarData } from './nav-data';
-import { faHome, faWallet, faChartSimple, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faCashRegister, faChartSimple, faUser } from '@fortawesome/free-solid-svg-icons';
 
 
 interface SideNavToggle{
@@ -35,8 +35,17 @@ export class SidenavComponent {
     });
   }
 
-  faHome = faHome;
-  iconList = [faWallet, faChartSimple, faUser];
+  iconList = [
+    {
+      
+      faCashRegister,
+      faChartSimple,
+      faUser
+    
+  }
+  ]
+    
+
 
 }
 

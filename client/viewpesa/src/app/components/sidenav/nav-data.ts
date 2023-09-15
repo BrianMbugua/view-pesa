@@ -2,7 +2,7 @@
 export const navbarData = [
     {
         routerLink: 'transactions',
-        icon:'fa faHome',
+        icon:'fa-solid fa-cash-register',
         label: 'Transactions'
     },
     {
