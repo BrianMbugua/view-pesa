@@ -50,7 +50,7 @@ export class RegisterComponent implements OnInit {
       Swal.fire("Error", "Please enter a valid email", "error")
     } else {
       this.http.post("http://localhost:4000/api/register", user, { withCredentials: true })
-        .subscribe(() => this.router.navigate(['/']), (err) => {
+        .subscribe(() => this.router.navigate(['/login']), (err) => {
           Swal.fire("Error", err.error.message, "error")
         })
     }

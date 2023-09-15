@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Emitters } from 'src/app/components/emitters/emitter';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -49,11 +50,16 @@ export class LoginComponent implements OnInit {
     } else {
       this.http.post("http://localhost:4000/api/login", user, { withCredentials: true })
         .subscribe(
-          (res) => this.router.navigate(['/']), 
+          (res) => {
+            this.router.navigate(['/'])
+            Emitters.authEmitter.emit(true);
+          }, 
           (error) => {
           Swal.fire("Error", error.error.message, "error")
+          Emitters.authEmitter.emit(false);
         })
     }
   }
 }
 
+ 
