@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 const User = require('./models/user');
 const routes = require('./routes/routes');
 
-const PORT = 3000
+const PORT = 4000
 const app = express();
 
 //allows the application to receive json data
@@ -26,7 +26,7 @@ app.use("/api", routes);
 
 
 //Connect to MongoDB
-mongoose.connect('mongodb+srv://morian:x9zory5ZpLtFbAP3@moriandb.wqca4nl.mongodb.net/MorianDB?retryWrites=true&w=majority')
+mongoose.connect('mongodb://localhost:27017/')
     .then(() => {
 
         app.listen(PORT, () => {
