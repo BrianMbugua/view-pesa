@@ -104,6 +104,56 @@ router.post('/transactions', async (req, res) => {
 
 })
 
+//get all transactions
+router.get('/transactions', async (req, res) => {
+    try {
+        const transactions = await Transaction.find({});
+        res.status(200).json(transactions)
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+
+})
+
+//get one transaction
+router.get('/transactions/:id', async (req, res) => {
+    try {
+        const id = req.params.id
+        const transaction = await Transaction.findById(id)
+        res.status(200).json(transaction);
+    } catch (error) {
+        res.status(500).json({ message: error.message} )
+    }
+})
+
+//update a  transaction
+router.put('/transactions/:id', async (req, res) => {
+    try {
+        const id = req.params.id
+        const transaction = await Transaction.findByIdAndUpdate(id, req.body);
+        if (!transaction) {
+            return res.status(404).json({ message: `Couldn't find transaction` })
+        }
+        const updatedTransaction = await Transaction.findById(id);
+        res.status(200).json(updatedTransaction)
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+})
+
+//delete a transaction
+router.delete('/transactions/:id', async(req, res) => {
+    try {
+        const { id } = req.params;
+        const transaction = await Transaction.findByIdAndDelete(id);
+        if (!transaction) {
+            return res.status(404).json({ message: `Transaction not found` })
+        }
+        res.status(200).json({ message: `Transaction with ID ${id} deleted`, transaction});
+    } catch (error) {
+        
+    }
+})
 
 router.get('/user', async (req, res) => {
     try {

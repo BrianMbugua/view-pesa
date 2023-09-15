@@ -96,7 +96,7 @@ app.delete('/users/:id', async (req, res) => {
         const { id } = req.params;
         const user = await User.findByIdAndDelete(id);
         if (!user) {
-            return res.status(404).json({ message: `User with ID ${id} not found` })
+            return res.status(404).json({ message: `User with not found` })
         }
         res.status(200).json({ message: `User with ID ${id} deleted`, user});
     } catch (error) {
