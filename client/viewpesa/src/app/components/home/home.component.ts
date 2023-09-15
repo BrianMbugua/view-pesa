@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.http
-      .get('http://localhost:3000/api/user', {
+      .get('http://localhost:4000/api/user', {
         withCredentials: true
       })
       .subscribe((res: any) => {

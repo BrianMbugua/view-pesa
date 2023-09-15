@@ -168,7 +168,7 @@ router.get('/user', async (req, res) => {
         const user = await User.findOne({ _id: claims._id })
 
         //excludes value in curly braces from data json
-        const { password, username, ...data } = await user.toJSON()
+        const { password, ...data } = await user.toJSON()
 
         res.send(data);
 
