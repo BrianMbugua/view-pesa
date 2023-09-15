@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
+const Transaction = require('../models/transaction');
 
 const router = Router();
 
@@ -79,9 +80,30 @@ router.post('/login', async (req, res) => {
     })
 })
 
-router.get('/transactions', (req, res) => {
-    res.send('Server root OK')
+//Add a transaction
+router.post('/transactions', async (req, res) => {
+    let category = req.body.category
+    let amount = req.body.amount
+    let date = req.body.date
+    let description = req.body.description
+
+
+    const transaction = new Transaction({
+        category: category,
+        amount: amount,
+        date: date,
+        description: description
+    });
+
+    //save to DB
+    const result = await transaction.save()
+
+    res.send({
+        message: result.category + " of " + result.date + " has been added"
+    })
+
 })
+
 
 router.get('/user', async (req, res) => {
     try {
