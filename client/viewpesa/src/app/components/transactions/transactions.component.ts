@@ -29,7 +29,7 @@ export class TransactionsComponent {
     this.transactionData$ = this.dataService.getTransaction()
     this.form = this.formBuilder.group({
       category: "",
-      amount: "",
+      amount: "", 
       date: "",
       description: ""
     })
