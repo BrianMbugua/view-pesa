@@ -1,2 +1,37 @@
+<h2>Transactions</h2>
+<div class="card" *ngFor="let transaction of transactionData$ | async">
+    <div class="card-title">
+        <nav class="navbar navbar-expand-md navbar-dark  mb-4">
+            <div class="container">
+                <h4>Transaction details</h4>
+                <div>
+                    <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                        <li class="nav-item">
+                            <button class="btn btn-info">Edit</button>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <button class="btn btn-danger">Delete</button>
+                        </li>
+                        
+                      
+                        
 
-<h1>Transactions</h1>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+        <div class="card-body">
+            <ul>
+                <li><h4>{{transaction.category}}</h4></li>
+                <li><p>{{transaction.amount}}</p></li>
+                <li><p>{{transaction.date}}</p></li>
+                <li><p>{{transaction.description}}</p></li>
+            </ul>
+        
+        </div>
+    </div>
+</div>
