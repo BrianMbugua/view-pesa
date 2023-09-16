@@ -2,17 +2,17 @@
 export const navbarData = [
     {
         routerLink: 'transactions',
-        icon:'fa-solid fa-cash-register',
+        icon:'T',
         label: 'Transactions'
     },
     {
         routerLink: 'visual-insights',
-        icon:'fa fa-chart-bar',
+        icon:'Vi',
         label: 'Visual Insights'
     },
     {
         routerLink: 'my-profile',
-        icon:'fa fa-cog',
+        icon:'P',
         label: 'My Profile'
     }
 ];

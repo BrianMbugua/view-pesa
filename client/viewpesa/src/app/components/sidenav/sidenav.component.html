@@ -6,25 +6,14 @@
             <i class="fal fa-times close-icon"></i>
         </button>
     </div>
-    <ul class="sidenav-nav" >
-       
-            <li class="sidenav-nav-item" *ngFor="let data of navData">
-                
-                
-                <a class="sidenav-nav-link" [routerLink]="[data.routerLink]" routerLinkActive="active"
-                    [routerLinkActiveOptions]="{exact: true}">
+    <ul class="sidenav-nav">
+        <li class="sidenav-nav-item" *ngFor="let data of navData">
 
-                    
-        
-                    <fa-icon class="sidenav-link-icon" icon="chart-simple"></fa-icon>
-                
-
-
-                    <span class="sidenav-link-text" *ngIf="collapsed">{{data.label}}</span>
-                </a>
-                
-            </li>
-       
-    
+            <a class="sidenav-nav-link" [routerLink]="[data.routerLink]" routerLinkActive="active"
+                [routerLinkActiveOptions]="{exact: true}">
+                <i>{{data.icon}}</i>
+                <span class="sidenav-link-text" *ngIf="collapsed">{{data.label}}</span>
+            </a>
+        </li>
     </ul>
 </div>
