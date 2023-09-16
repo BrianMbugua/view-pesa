@@ -9,13 +9,13 @@
                         <li class="nav-item">
                             <button class="btn btn-info">Edit</button>
                         </li>
-                        
+
                         <li class="nav-item">
                             <button class="btn btn-danger">Delete</button>
                         </li>
-                        
-                      
-                        
+
+
+
 
 
                     </ul>
@@ -23,15 +23,37 @@
             </div>
         </nav>
 
-
         <div class="card-body">
             <ul>
-                <li><h4>{{transaction.category}}</h4></li>
-                <li><p>{{transaction.amount}}</p></li>
-                <li><p>{{transaction.date}}</p></li>
-                <li><p>{{transaction.description}}</p></li>
+                <li>
+                    <h4>{{transaction.category}}</h4>
+                </li>
+                <li>
+                    <p>{{transaction.amount}}</p>
+                </li>
+                <li>
+                    <p>{{transaction.date}}</p>
+                </li>
+                <li>
+                    <p>{{transaction.description}}</p>
+                </li>
             </ul>
-        
+
         </div>
     </div>
+</div>
+<br>
+<div class="container w-50">
+    <button class="w-20 btn btn-lg btn-info" (click)="showTransactionForm()" *ngIf="!showForm">Add
+        Transaction</button>
+    <button class="w-20 btn btn-lg btn-danger" (click)="hideTransactionForm()" *ngIf="showForm">Close</button>
+
+    <form [formGroup]="form" (submit)="submit()" *ngIf="showForm">
+        <h4 class="h5 mb-3 fw-normal">Add Transaction</h4>
+        <input formControlName="category" class="form-control" placeholder="Category" required>
+        <input formControlName="amount" type="email" class="form-control" placeholder="Amount" required>
+        <input formControlName="date" class="form-control" placeholder="Date" required>
+        <input formControlName="description" class="form-control" placeholder="Description">
+        <button class="w-100 btn btn-lg btn-primary" type="submit">ADD</button>
+    </form>
 </div>
