@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
 const Transaction = require('../models/transaction');
+const asyncMiddleware = require('../middlewares/asyncMiddleware')
 
 const router = Router();
 
@@ -104,77 +105,57 @@ router.post('/transactions', async (req, res) => {
 })
 
 //get all transactions
-router.get('/transactions', async (req, res) => {
-    try {
-        const transactions = await Transaction.find({});
-        res.status(200).json(transactions)
-    } catch (error) {
-        res.status(500).json({ message: error.message })
-    }
+router.get('/transactions', asyncMiddleware(async (req, res) => {
 
-})
+    const transactions = await Transaction.find({});
+    res.status(200).json(transactions)
+
+}) )
 
 //get one transaction
-router.get('/transactions/:id', async (req, res) => {
-    try {
-        const id = req.params.id
-        const transaction = await Transaction.findById(id)
-        res.status(200).json(transaction);
-    } catch (error) {
-        res.status(500).json({ message: error.message} )
-    }
-})
+router.get('/transactions/:id', asyncMiddleware(async (req, res) => {
+    const id = req.params.id
+    const transaction = await Transaction.findById(id)
+    res.status(200).json(transaction);
+}) )
 
 //update a  transaction
-router.put('/transactions/:id', async (req, res) => {
-    try {
-        const id = req.params.id
-        const transaction = await Transaction.findByIdAndUpdate(id, req.body);
-        if (!transaction) {
-            return res.status(404).json({ message: `Couldn't find transaction` })
-        }
-        const updatedTransaction = await Transaction.findById(id);
-        res.status(200).json(updatedTransaction)
-    } catch (error) {
-        res.status(500).json({ message: error.message })
+router.put('/transactions/:id', asyncMiddleware( async (req, res) => {
+    const id = req.params.id
+    const transaction = await Transaction.findByIdAndUpdate(id, req.body);
+    if (!transaction) {
+        return res.status(404).json({ message: `Couldn't find transaction` })
     }
-})
+    const updatedTransaction = await Transaction.findById(id);
+    res.status(200).json(updatedTransaction)
+}) )
 
 //delete a transaction
-router.delete('/transactions/:id', async(req, res) => {
-    try {
-        const { id } = req.params;
-        const transaction = await Transaction.findByIdAndDelete(id);
-        if (!transaction) {
-            return res.status(404).json({ message: `Transaction not found` })
-        }
-        res.status(200).json({ message: `Transaction with ID ${id} deleted`, transaction});
-    } catch (error) {
-        
+router.delete('/transactions/:id', asyncMiddleware(async(req, res) => {
+    const { id } = req.params;
+    const transaction = await Transaction.findByIdAndDelete(id);
+    if (!transaction) {
+        return res.status(404).json({ message: `Transaction not found` })
     }
-})
+    res.status(200).json({ message: `Transaction with ID ${id} deleted`, transaction});
+}) )
 
-router.get('/user', async (req, res) => {
-    try {
-        const cookies = req.cookies['jwt']
+router.get('/user', asyncMiddleware( async (req, res) => {
+    const cookies = req.cookies['jwt']
 
-        const claims = jwt.verify(cookies, "secretXLR")
+    const claims = jwt.verify(cookies, "secretXLR")
 
-        if (!claims) {
-            return res.status(401).json({ message: "Unauthorized" })
-        }
-
-        const user = await User.findOne({ _id: claims._id })
-
-        //excludes value in curly braces from data json
-        const { password, ...data } = await user.toJSON()
-
-        res.send(data);
-
-    } catch (err) {
-        return res.status(401).send({ message: "Unauthenticated" })
+    if (!claims) {
+        return res.status(401).json({ message: "Unauthorized" })
     }
-})
+
+    const user = await User.findOne({ _id: claims._id })
+
+    //excludes value in curly braces from data json
+    const { password, ...data } = await user.toJSON()
+
+    res.send(data);
+}))
 
 router.post('/logout', (req, res) => {
     res.cookie("jwt", "", { maxAge: 0 })

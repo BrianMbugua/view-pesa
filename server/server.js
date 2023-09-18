@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const asyncMiddleware = require('./middlewares/asyncMiddleware');
 
 const User = require('./models/user');
 const routes = require('./routes/routes');
@@ -42,65 +43,48 @@ app.get('/', (req, res) => {
     res.send('Hello to CLIENT!')
 })
 
-//users (plural) since we are fetching a multiple users at a time
-app.get('/users', async (req, res) => {
-    try {
-        const users = await User.find({});
-        res.status(200).json(users)
-    } catch (error) {
-        res.status(500).json({ message: error.message })
-    }
 
-})
+//users (plural) since we are fetching a multiple users at a time
+app.get('/users', asyncMiddleware(async (req, res) => {
+
+    const users = await User.find({});
+    res.status(200).json(users)
+
+} ) )
 
 //fetch a single user
-app.get('/users/:id', async (req, res) => {
-    try {
-        const id = req.params.id
-        const user = await User.findById(id)
-        res.status(200).json(user)
-    } catch (error) {
-        res.status(500).json({ message: error.message })
-    }
-})
+app.get('/users/:id', asyncMiddleware(async (req, res) => {
+    const id = req.params.id
+    const user = await User.findById(id)
+    res.status(200).json(user)
+}))
 
 //user (single) since we are saving a single user at a time
-app.post('/users', async (req, res) => {
-    try {
-        const user = await User.create(req.body)
-        res.status(200).json(user)
-    } catch (error) {
-        console.log(error.message);
-        res.status(500).json({ message: error.message })
-    }
-})
+app.post('/users', asyncMiddleware(async (req, res) => {
+
+    const user = await User.create(req.body)
+    res.status(200).json(user)
+
+}))
 
 //update a user
-app.put('/users/:id', async (req, res) => {
-    try {
-        const { id } = req.params;
-        const user = await User.findByIdAndUpdate(id, req.body);
-        if (!user) {
-            return res.status(404).json({ message: `User with ID ${id} not found` })
-        }
-        const updatedUser = await User.findById(id);
-        res.status(200).json(updatedUser);
-    } catch (error) {
-        res.status(500).json({ message: error.message })
+app.put('/users/:id', asyncMiddleware(async (req, res) => {
+    const { id } = req.params;
+    const user = await User.findByIdAndUpdate(id, req.body);
+    if (!user) {
+        throw new Error({ message: `Not found` })
     }
-})
+    const updatedUser = await User.findById(id);
+    res.status(200).json(updatedUser);
+}) )
 
 //delete a user
-app.delete('/users/:id', async (req, res) => {
-    try {
-        const { id } = req.params;
-        const user = await User.findByIdAndDelete(id);
-        if (!user) {
-            return res.status(404).json({ message: `User with not found` })
-        }
-        res.status(200).json({ message: `User with ID ${id} deleted`, user});
-    } catch (error) {
-        res.status(500).json({ message: error.message })
+app.delete('/users/:id', asyncMiddleware(async (req, res) => {
+    const { id } = req.params;
+    const user = await User.findByIdAndDelete(id);
+    if (!user) {
+        throw new Error("User not found")
     }
-})
+    res.status(200).json({ message: "Success"});
+}) )
 
