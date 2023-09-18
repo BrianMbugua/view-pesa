@@ -69,14 +69,13 @@ router.post('/login', async (req, res) => {
     }
  
     const token = jwt.sign({ _id: user._id }, "secretXLR");
-
     res.cookie("jwt", token, {
         httpOnly: true,
         maxAge: 6 * 60 * 60 * 1000  // 24 hours in milliseconds
     })
 
     res.send({
-        message: "success"
+        message: "Success",
     })
 })
 
@@ -87,12 +86,12 @@ router.post('/transactions', async (req, res) => {
     let date = req.body.date
     let description = req.body.description
 
-
     const transaction = new Transaction({
         category: category,
         amount: amount,
         date: date,
-        description: description
+        description: description,
+        owner: req.user._id
     });
 
     //save to DB
