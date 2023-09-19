@@ -1,13 +1,12 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const cors = require('cors');
+const dotenv = require('dotenv');
+const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
-const asyncMiddleware = require('./middlewares/asyncMiddleware');
+const userRouter = require('./routes/user.routes');
+const { getUsers, getUserInfo, addUser, updateUser, deleteUser } = require('./controllers/userController');
 
-const User = require('./models/user');
-const routes = require('./routes/routes');
 
-const PORT = 4000
 const app = express();
 
 //allows the application to receive json data
@@ -20,10 +19,12 @@ app.use(cors({
     origin: ['http://localhost:4200']
 }
 ));
+dotenv.config()
+const PORT = process.env.PORT || 4000
 
 app.use(cookieParser());
 
-app.use("/api", routes);
+app.use("/api/users", userRouter);
 
 
 //Connect to MongoDB
@@ -45,46 +46,18 @@ app.get('/', (req, res) => {
 
 
 //users (plural) since we are fetching a multiple users at a time
-app.get('/users', asyncMiddleware(async (req, res) => {
 
-    const users = await User.find({});
-    res.status(200).json(users)
-
-} ) )
+app.get('/users', getUsers )
 
 //fetch a single user
-app.get('/users/:id', asyncMiddleware(async (req, res) => {
-    const id = req.params.id
-    const user = await User.findById(id)
-    res.status(200).json(user)
-}))
+app.get('/users/:id', getUserInfo)
 
 //user (single) since we are saving a single user at a time
-app.post('/users', asyncMiddleware(async (req, res) => {
-
-    const user = await User.create(req.body)
-    res.status(200).json(user)
-
-}))
+app.post('/users', addUser) 
 
 //update a user
-app.put('/users/:id', asyncMiddleware(async (req, res) => {
-    const { id } = req.params;
-    const user = await User.findByIdAndUpdate(id, req.body);
-    if (!user) {
-        throw new Error({ message: `Not found` })
-    }
-    const updatedUser = await User.findById(id);
-    res.status(200).json(updatedUser);
-}) )
+app.put('/users/:id', updateUser )
 
 //delete a user
-app.delete('/users/:id', asyncMiddleware(async (req, res) => {
-    const { id } = req.params;
-    const user = await User.findByIdAndDelete(id);
-    if (!user) {
-        throw new Error("User not found")
-    }
-    res.status(200).json({ message: "Success"});
-}) )
+app.delete('/users/:id', deleteUser) 
 
