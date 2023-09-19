@@ -3,7 +3,7 @@ module.exports = (callback) => {
         try {
         await callback(req, res, next)
         } catch (error) {
-            res.status( res.statusCode<400?400: res.statusCode || 500 ).json({ message: error.message })
+            next(error)
         }
     }
     

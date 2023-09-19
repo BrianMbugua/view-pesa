@@ -4,7 +4,9 @@ const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const userRouter = require('./routes/user.routes');
+const db = require('./config/db');
 const { getUsers, getUserInfo, addUser, updateUser, deleteUser } = require('./controllers/userController');
+const errorMiddleware = require('./middlewares/errorMiddleware');
 
 
 const app = express();
@@ -22,23 +24,15 @@ app.use(cors({
 dotenv.config()
 const PORT = process.env.PORT || 4000
 
+db()
+
 app.use(cookieParser());
 
 app.use("/api/users", userRouter);
-
-
-//Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/')
-    .then(() => {
-
-        app.listen(PORT, () => {
-            console.log(`Server running on port: ${PORT}`)
-        })
-        console.log('Connected to MongoDB')
-    }).catch((err) => {
-        console.log(err)
-    })
-
+app.use(errorMiddleware)
+app.listen(PORT, () => {
+    console.log(`Server running on port: ${PORT}`)
+})
 
 app.get('/', (req, res) => {
     res.send('Hello to CLIENT!')
@@ -47,17 +41,17 @@ app.get('/', (req, res) => {
 
 //users (plural) since we are fetching a multiple users at a time
 
-app.get('/users', getUsers )
+app.get('/users', getUsers)
 
 //fetch a single user
 app.get('/users/:id', getUserInfo)
 
 //user (single) since we are saving a single user at a time
-app.post('/users', addUser) 
+app.post('/users', addUser)
 
 //update a user
-app.put('/users/:id', updateUser )
+app.put('/users/:id', updateUser)
 
 //delete a user
-app.delete('/users/:id', deleteUser) 
+app.delete('/users/:id', deleteUser)
 
