@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 
 const userRouter = require('./routes/user.routes');
 const transactionRouter = require('./routes/transaction.routes');
+
 const db = require('./config/db');
 const { getUsers, getUserInfo, addUser, updateUser, deleteUser, registerUser, loginUser } = require('./controllers/user.controller');
 const errorMiddleware = require('./middlewares/errorMiddleware');

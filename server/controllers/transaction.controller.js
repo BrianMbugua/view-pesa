@@ -22,13 +22,15 @@ const deleteTransaction = asyncMiddleware( async(req, res) => {
     const user = req.user
     const transactions = await Transaction.findById(req.params.id)
 
+    console.log(transactions)
+
     if (transactions.owner.toString() !== user._id.toString()) {
         res.status(401)
         throw new Error ("Unauthorized access, invalid user")
     }
 
     await Transaction.findByIdAndRemove(req.params.id)
-    res.sene(204).end()
+    res.send(204).end()
 })
 
 const updateTransaction = asyncMiddleware( async (req, res) => {

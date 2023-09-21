@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
     else if (!this.ValidateEmail(user.email)) {
       Swal.fire("Error", "Please enter a valid email", "error")
     } else {
-      this.http.post("http://localhost:4000/api/login", user, { withCredentials: true })
+      this.http.post("http://localhost:4000/api/users/loginUser", user, { withCredentials: true })
         .subscribe(
           (res) => {
             this.router.navigate(['/'])
