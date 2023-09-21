@@ -1,13 +1,13 @@
 const User = require('../models/user')
 const asyncMiddleware = require('../middlewares/asyncMiddleware');
-const jwt = require('jsonwebtoken');
+const customJwt = require('../utils/jwt');
 
 module.exports = asyncMiddleware( async(req, res, next) => {
     const {authorization} = req.headers
 
     if ( authorization  && authorization.startsWith('Bearer') ) {
-        const token = authorization.split('')[1]
-        const decoded = jwt.verify( token)
+        const token = authorization.split(' ')[1]
+        const decoded = customJwt.verify( token )
 
         const user = await User.findById(decoded._id ).select('-password')
         if (user) {
@@ -15,7 +15,7 @@ module.exports = asyncMiddleware( async(req, res, next) => {
             next()
          }else{
             res.status(401)
-            throw new Error("Unauthorized Invalid token")
+            throw new Error("Unauthorized, Invalid token")
          }
     }else {
          res.status(401)

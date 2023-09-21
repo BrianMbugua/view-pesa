@@ -5,23 +5,26 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const userRouter = require('./routes/user.routes');
 const db = require('./config/db');
-const { getUsers, getUserInfo, addUser, updateUser, deleteUser } = require('./controllers/userController');
+const { getUsers, getUserInfo, addUser, updateUser, deleteUser, registerUser, loginUser } = require('./controllers/userController');
 const errorMiddleware = require('./middlewares/errorMiddleware');
+// const crypto = require('crypto');
 
+
+dotenv.config()
 
 const app = express();
 
 //allows the application to receive json data
 app.use(express.json());
-
 app.use(express.urlencoded({ extended: false }));
-
 app.use(cors({
     credentials: true,
     origin: ['http://localhost:4200']
 }
 ));
-dotenv.config()
+// console.log(crypto.randomUUID())
+
+
 const PORT = process.env.PORT || 4000
 
 db()
@@ -29,6 +32,7 @@ db()
 app.use(cookieParser());
 
 app.use("/api/users", userRouter);
+
 app.use(errorMiddleware)
 app.listen(PORT, () => {
     console.log(`Server running on port: ${PORT}`)
@@ -41,17 +45,23 @@ app.get('/', (req, res) => {
 
 //users (plural) since we are fetching a multiple users at a time
 
-app.get('/users', getUsers)
+userRouter.get('/', getUsers)
 
 //fetch a single user
-app.get('/users/:id', getUserInfo)
+userRouter.get('/:id', getUserInfo)
 
 //user (single) since we are saving a single user at a time
-app.post('/users', addUser)
+userRouter.post('/', addUser)
 
 //update a user
-app.put('/users/:id', updateUser)
+userRouter.put('/:id', updateUser)
 
 //delete a user
-app.delete('/users/:id', deleteUser)
+userRouter.delete('/:id', deleteUser)
+
+//register a user
+userRouter.post('/registerUser', registerUser)
+
+//login a user
+userRouter.post('/loginUser', loginUser)
 
