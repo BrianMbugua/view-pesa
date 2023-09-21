@@ -25,23 +25,26 @@ const registerUser = asyncMiddleware(async (req, res) => {
     if (record) {
         return res.status(400).json({ message: "Email already registered" })
     } else {
-        const user = new User({
+        const new_user = new User({
             username: username,
             email: email,
             password: hashedPassword
         });
 
         //save to DB
-        const result = await user.save()
+        const result = await new_user.save()
 
-        //JWT token
-        const { _id } = await result.toJSON()
-        const token = jwt.sign({ _id: _id }, "secretXLR")
+        res.status(201).send({
+            _id: new_user._id,
+            username: new_user.username,
+            token: customJwt.generate(new_user._id)
 
-        res.cookie("jwt", token, {
-            httpOnly: true,
-            maxAge: 6 * 60 * 60 * 1000
         })
+
+        // res.cookie("jwt", token, {
+        //     httpOnly: true,
+        //     maxAge: 6 * 60 * 60 * 1000
+        // })
 
         res.send({
             message: "User " + result.username + " has been registered" 
@@ -63,16 +66,10 @@ const loginUser = asyncMiddleware(async (req, res) => {
     if (await bcrypt.compare(req.body.password, user.password)) {
         res.status(200).send({
         _id: user._id,
+        username: user.username,
         token: customJwt.generate( user._id)
         })
     }else throw new Error("Password is Incorrect")
-    // const token = jwt.sign({ _id: user._id }, "secretXLR");
-   
-    // res.cookie("jwt", token, {
-    //     httpOnly: true,
-    //     maxAge: 6 * 60 * 60 * 1000  // 24 hours in milliseconds
-    // })
-
     res.send({
         message: "Success",
     })

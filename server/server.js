@@ -3,9 +3,11 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
+
 const userRouter = require('./routes/user.routes');
+const transactionRouter = require('./routes/transaction.routes');
 const db = require('./config/db');
-const { getUsers, getUserInfo, addUser, updateUser, deleteUser, registerUser, loginUser } = require('./controllers/userController');
+const { getUsers, getUserInfo, addUser, updateUser, deleteUser, registerUser, loginUser } = require('./controllers/user.controller');
 const errorMiddleware = require('./middlewares/errorMiddleware');
 // const crypto = require('crypto');
 
@@ -32,6 +34,7 @@ db()
 app.use(cookieParser());
 
 app.use("/api/users", userRouter);
+app.use("/api/transactions", transactionRouter);
 
 app.use(errorMiddleware)
 app.listen(PORT, () => {
@@ -41,27 +44,4 @@ app.listen(PORT, () => {
 app.get('/', (req, res) => {
     res.send('Hello to CLIENT!')
 })
-
-
-//users (plural) since we are fetching a multiple users at a time
-
-userRouter.get('/', getUsers)
-
-//fetch a single user
-userRouter.get('/:id', getUserInfo)
-
-//user (single) since we are saving a single user at a time
-userRouter.post('/', addUser)
-
-//update a user
-userRouter.put('/:id', updateUser)
-
-//delete a user
-userRouter.delete('/:id', deleteUser)
-
-//register a user
-userRouter.post('/registerUser', registerUser)
-
-//login a user
-userRouter.post('/loginUser', loginUser)
 
