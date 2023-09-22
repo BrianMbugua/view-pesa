@@ -116,6 +116,7 @@ const deleteUser = asyncMiddleware(async (req, res) => {
     }
     res.status(204).json({ message: "Success"});
 }) 
+
 module.exports =  {
    addUser, getUserInfo, getUsers, updateUser, deleteUser, registerUser, loginUser
 }

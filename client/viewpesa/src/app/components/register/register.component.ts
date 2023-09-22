@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -16,7 +17,7 @@ export class RegisterComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
-    private router: Router
+    private router: Router, private authService: AuthService
   ) {
   }
 
@@ -49,10 +50,16 @@ export class RegisterComponent implements OnInit {
     else if (!this.ValidateEmail(user.email)) {
       Swal.fire("Error", "Please enter a valid email", "error")
     } else {
-      this.http.post("http://localhost:4000/api/register", user, { withCredentials: true })
-        .subscribe(() => this.router.navigate(['/login']), (err) => {
-          Swal.fire("Error", err.error.message, "error")
-        })
+
+      this.authService.register(user).subscribe((res) => {
+        
+        this.router.navigate(['login'])
+
+      });
+      // this.http.post("http://localhost:4000/api/users/registerUser", user, { withCredentials: true })
+      //   .subscribe(() => this.router.navigate(['login']), (err) => {
+      //     Swal.fire("Error", err.error.message, "error")
+      //   })
     }
   }
 }

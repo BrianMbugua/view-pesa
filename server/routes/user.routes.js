@@ -18,4 +18,6 @@ userRouter.route('/loginUser')
 userRouter.route('/registerUser')
     .post(registerUser)
 
+
+
 module.exports = userRouter

@@ -157,12 +157,5 @@ router.get('/user', asyncMiddleware( async (req, res) => {
     res.send(data);
 }))
 
-router.post('/logout', (req, res) => {
-    res.cookie("jwt", "", { maxAge: 0 })
-
-    res.send({
-        message: "success"
-    })
-})
 
 module.exports = router

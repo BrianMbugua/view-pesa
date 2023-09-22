@@ -15,6 +15,7 @@ import { TransactionsComponent } from './components/transactions/transactions.co
 import { ProfileComponent } from './components/profile/profile.component';
 import { VisualInsightsComponent } from './components/visual-insights/visual-insights.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AuthInterceptorProvider } from './auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     HttpClientModule,
     FontAwesomeModule
   ],
-  providers: [],
+  providers: [AuthInterceptorProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

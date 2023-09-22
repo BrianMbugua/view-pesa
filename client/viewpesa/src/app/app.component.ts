@@ -29,10 +29,7 @@ export class AppComponent {
 
 
   logout():void {
-    this.http.post("http://localhost:4000/api/logout",{},{withCredentials: true})
-    .subscribe(()=> this.authenticated = false)
-    
-    this.router.navigate(['/login']);
+    this.authService.logout();
   }
 
   ngOnInit() {
