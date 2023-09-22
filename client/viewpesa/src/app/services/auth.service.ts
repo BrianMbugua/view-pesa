@@ -33,7 +33,7 @@ export class AuthService {
     return this.apiService.onRegister(user).pipe(
       tap((res:any) => {
         localStorage.setItem(this.TOKEN_NAME, res.token);
-        // this._isLoggedIn$.next(true);
+        
       }
     ));
   }

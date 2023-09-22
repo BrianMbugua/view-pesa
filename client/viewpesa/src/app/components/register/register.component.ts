@@ -56,10 +56,7 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(['login'])
 
       });
-      // this.http.post("http://localhost:4000/api/users/registerUser", user, { withCredentials: true })
-      //   .subscribe(() => this.router.navigate(['login']), (err) => {
-      //     Swal.fire("Error", err.error.message, "error")
-      //   })
+      
     }
   }
 }
