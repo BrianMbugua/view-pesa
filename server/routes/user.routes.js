@@ -13,9 +13,9 @@ userRouter.route('/:id')
     .get( authMiddleware, getUserInfo)
 
 userRouter.route('/loginUser')
-.post(loginUser)
+    .post(loginUser)
 
 userRouter.route('/registerUser')
-.post(registerUser)
+    .post(registerUser)
 
 module.exports = userRouter
