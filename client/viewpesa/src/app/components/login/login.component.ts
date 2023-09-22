@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Emitters } from 'src/app/components/emitters/emitter';
 import Swal from 'sweetalert2';
+import { AuthService } from 'src/app/services/auth.service';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +18,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private http: HttpClient
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -37,6 +39,12 @@ export class LoginComponent implements OnInit {
       return false;
     }
   }
+  // onLogin(){
+  //   let user = this.form.getRawValue();
+  //   console.log(user);
+  //   this.authService.onLogin(user)
+
+  // }
 
   submit(): void {
     let user = this.form.getRawValue();
@@ -48,16 +56,24 @@ export class LoginComponent implements OnInit {
     else if (!this.ValidateEmail(user.email)) {
       Swal.fire("Error", "Please enter a valid email", "error")
     } else {
-      this.http.post("http://localhost:4000/api/users/loginUser", user, { withCredentials: true })
-        .subscribe(
-          (res) => {
-            this.router.navigate(['/'])
-            Emitters.authEmitter.emit(true);
-          }, 
-          (error) => {
-          Swal.fire("Error", error.error.message, "error")
-          Emitters.authEmitter.emit(false);
-        })
+
+      this.authService.login(user).subscribe((res) => {
+        
+        this.router.navigate(['/transactions'])
+      });
+
+
+      // this.http.post("http://localhost:4000/api/users/loginUser", user, { withCredentials: true })
+      //   .subscribe(
+      //     (res) => {
+      //       console.log(res)
+      //       this.router.navigate(['/transactions'])
+      //       Emitters.authEmitter.emit(true);
+      //     }, 
+      //     (error) => {
+      //     Swal.fire("Error", error.error.message, "error")
+      //     Emitters.authEmitter.emit(false);
+      //   })
     }
   }
 }

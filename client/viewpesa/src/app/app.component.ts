@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Emitters } from 'src/app/components/emitters/emitter';
+import { AuthService } from './services/auth.service';
 
 interface SideNavToggle {
   screenWidth: number;
@@ -19,7 +20,7 @@ export class AppComponent {
   isSideNavCollapsed = false;
   screenWidth = 0;
 
-  constructor(private http: HttpClient, private router: Router){}
+  constructor(private http: HttpClient, private router: Router, public authService: AuthService){}
 
   onToggleSidenav(data: SideNavToggle): void {
     this.screenWidth = data.screenWidth;
@@ -36,7 +37,7 @@ export class AppComponent {
 
   ngOnInit() {
     this.http
-      .get('http://localhost:4000/api/user', {
+      .get('http://localhost:4000/api/users', {
         withCredentials: true
       })
       .subscribe((res: any) => {
