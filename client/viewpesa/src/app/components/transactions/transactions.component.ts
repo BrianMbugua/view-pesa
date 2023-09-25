@@ -5,6 +5,8 @@ import { Observable, catchError, map } from 'rxjs';
 import Swal from 'sweetalert2';
 import { DataService } from 'src/app/services/data.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { ApiService } from 'src/app/services/api.service';
+import { TransactService } from 'src/app/services/transact.service';
 
 @Component({
   selector: 'app-transactions',
@@ -20,20 +22,13 @@ export class TransactionsComponent {
   constructor(private dataService: DataService,
     private formBuilder: FormBuilder,
     private http: HttpClient,
-    private router: Router) {
+    private router: Router,
+    private apiService: ApiService, private transactService: TransactService) {
 
   }
 
 
-  ngOnInit(): void {
-    this.transactionData$ = this.dataService.getTransaction()
-    this.form = this.formBuilder.group({
-      category: "",
-      amount: "", 
-      date: "",
-      description: ""
-    })
-  }
+  
 
   errorMessage(): void {
     Swal.fire("Error", "Error", "error")
@@ -53,13 +48,27 @@ export class TransactionsComponent {
     if (transaction.category == "" || transaction.amount == "" || transaction.date == "") {
       Swal.fire("Error", "Please enter all required transaction details", "error")
     } else {
-      this.http.post("http://localhost:4000/api/transactions", transaction, { withCredentials: true })
-        .subscribe(() => this.router.navigate(['/transactions']))
+      this.apiService.getTransactions(transaction)
+        .subscribe(() => this.router.navigate(['transactions']))
       Swal.fire("Success", "Transactions successfully added", "success"),
         (err: any) => {
           Swal.fire("Error", err.error.message, "error")
         }
     }
+  }
+
+  deleteTransaction():void {
+    // this.transactService.deleteTransaction()
+  }
+
+  ngOnInit(): void {
+    this.transactionData$ = this.dataService.getTransaction()
+    this.form = this.formBuilder.group({
+      category: "",
+      amount: "",
+      date: "",
+      description: ""
+    })
   }
 
 }

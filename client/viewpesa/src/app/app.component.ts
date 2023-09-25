@@ -31,23 +31,33 @@ export class AppComponent {
   logout():void {
     this.authService.logout();
   }
-
+  
   ngOnInit() {
-    this.http
-      .get('http://localhost:4000/api/users', {
-        withCredentials: true
-      })
-      .subscribe((res: any) => {
-        Emitters.authEmitter.emit(true);
-      },
-        (err) => {
-          Emitters.authEmitter.emit(false);
-        }
-      );
+    console.log(this.authService.isLoggedIn$)
+    // let checkToken = this.authService.getToken();
+    // if (checkToken == null) { 
+    //   this.router.navigate(['/login']);
+    
+    // }else{
+    //   this.router.navigate(['/transactions']);
+    // }
 
-      Emitters.authEmitter.subscribe((auth:boolean) => {
-        this.authenticated = auth;
-      })
+
+    // this.http
+    //   .get('http://localhost:4000/api/users', {
+    //     withCredentials: true
+    //   })
+    //   .subscribe((res: any) => {
+    //     Emitters.authEmitter.emit(true);
+    //   },
+    //     (err) => {
+    //       Emitters.authEmitter.emit(false);
+    //     }
+    //   );
+
+    //   Emitters.authEmitter.subscribe((auth:boolean) => {
+    //     this.authenticated = auth;
+    //   })
   }
 }
 

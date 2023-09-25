@@ -23,7 +23,7 @@ export class AuthService {
 
   constructor(private apiService: ApiService, private router: Router) {
 
-    //check expiration before setting token state
+    //in production check expiration before setting token state
     this._isLoggedIn$.next(!!this.getToken);
   }
 
@@ -37,6 +37,7 @@ export class AuthService {
       }
     ));
   }
+
 
   login(user: any) {
     return this.apiService.onLogin(user).pipe(

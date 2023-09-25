@@ -17,4 +17,8 @@ export class ApiService {
   onRegister(obj:any): Observable<any> {
     return this.httpClient.post('http://localhost:4000/api/users/registerUser', obj)
   }
+
+  getTransactions(transaction: any): Observable<any> {
+    return this.httpClient.get('http://localhost:400/api/transactions', transaction)
+  }
 }

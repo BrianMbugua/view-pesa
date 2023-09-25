@@ -1,6 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { navbarData } from './nav-data';
 import { faCashRegister, faChartSimple, faUser } from '@fortawesome/free-solid-svg-icons';
+import { AuthService } from 'src/app/services/auth.service';
 
 
 interface SideNavToggle{
@@ -44,6 +45,8 @@ export class SidenavComponent {
     
   }
   ]
+
+  
     
 
 
