@@ -19,9 +19,10 @@ export class ProfileComponent {
   ngOnInit() {
 
     let id = this.actRoute.snapshot.paramMap.get('id');
+    console.log("Profile page id ", id)
     this.authService.getUserProfile(id).subscribe((res) => {
       this.currentUser = res;
-      console.log(this.currentUser._id)
+      // console.log(this.currentUser._id)
     });
 
   }

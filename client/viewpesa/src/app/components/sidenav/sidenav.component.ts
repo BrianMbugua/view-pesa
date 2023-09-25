@@ -18,11 +18,32 @@ interface SideNavToggle{
 export class SidenavComponent {
 
   currentUser: User = {};
-  obtainID = this.authService.obtainID
+  
   constructor(private authService: AuthService, private actRoute: ActivatedRoute) {
-    
+    // let id = this.actRoute.snapshot.paramMap.get('id');
+    // console.log("Snapshot id ", id)
+    // this.authService.getUserProfile(id).subscribe((res) => {
+    //   this.currentUser = res;
+      
+    //   console.log("Response ", this.currentUser._id)
+     
+    // });
+
 
     
+  }
+  
+  ngOnInit() {
+
+    let id = this.actRoute.snapshot.paramMap.get('id');
+    console.log("Snapshot id ", id)
+    this.authService.getUserProfile(id).subscribe((res) => {
+      this.currentUser = res;
+      
+      console.log("Response ", this.currentUser._id)
+     
+    });
+
   }
 
   @Output() onToggleSidenav: EventEmitter<SideNavToggle> = new EventEmitter();
@@ -56,16 +77,6 @@ export class SidenavComponent {
   }
   ]
 
-  ngOnInit() {
-
-    let id = this.actRoute.snapshot.paramMap.get('id');
-    this.authService.getUserProfile(id).subscribe((res) => {
-      this.currentUser = res;
-      
-      console.log(this.currentUser._id)
-    });
-
-  }
 
   
     
