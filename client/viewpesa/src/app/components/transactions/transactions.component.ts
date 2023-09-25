@@ -69,7 +69,7 @@ export class TransactionsComponent {
   }
 
   ngOnInit(): void {
-    this.transactionData$ = this.dataService.getTransaction()
+    this.transactionData$ = this.transactService.getTransactions()
     this.form = this.formBuilder.group({
       category: "",
       amount: "",

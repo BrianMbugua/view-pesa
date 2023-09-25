@@ -15,5 +15,12 @@
                 <span class="sidenav-link-text" *ngIf="collapsed">{{data.label}}</span>
             </a>
         </li>
+        <li>
+            <a class="sidenav-nav-link" [routerLink]="['/my-profile', obtainID]" routerLinkActive="active"
+                [routerLinkActiveOptions]="{exact: true}">
+                <i>My</i>
+                <span class="sidenav-link-text" *ngIf="collapsed">My Profile</span>
+            </a>
+        </li>
     </ul>
 </div>

@@ -11,8 +11,8 @@ export class TransactService {
 
   }
 
-  getTransactions(transactions: any){
-    return this.apiService.getTransactions(transactions);
+  getTransactions(){
+    return this.apiService.getTransactions("http://localhost:4000/api/transactions");
 
   }
 

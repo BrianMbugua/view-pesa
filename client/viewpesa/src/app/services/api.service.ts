@@ -25,4 +25,8 @@ export class ApiService {
   addTransactions(transaction: any): Observable<any> {
     return this.httpClient.post('http://localhost:4000/api/transactions', transaction)
   }
+
+  getUserInfo(): Observable<any> {
+    return this.httpClient.get(`http://localhost:4000/api/users/:id`)
+  }
 }
