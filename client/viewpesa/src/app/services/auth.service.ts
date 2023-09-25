@@ -17,14 +17,21 @@ export class AuthService {
   private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
   isLoggedIn$ = this._isLoggedIn$.asObservable();
 
-  getToken() {
-    return localStorage.getItem(this.TOKEN_NAME);
-  }
+  
 
   constructor(private apiService: ApiService, private router: Router) {
 
     //in production check expiration before setting token state
     this._isLoggedIn$.next(!!this.getToken);
+  }
+
+  getToken() {
+    return localStorage.getItem(this.TOKEN_NAME);
+  }
+
+  get isLoggedIn(): boolean {
+    let authToken = localStorage.getItem(this.TOKEN_NAME);
+    return authToken !== null ? true : false;
   }
 
   user = new User();

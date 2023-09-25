@@ -40,6 +40,9 @@ export class TransactionsComponent {
   hideTransactionForm(): void {
     this.showForm = false;
   }
+  reloadPage(){
+    window.location.reload()
+  }
 
   submit(): void {
     let transaction = this.form.getRawValue();
@@ -48,13 +51,17 @@ export class TransactionsComponent {
     if (transaction.category == "" || transaction.amount == "" || transaction.date == "") {
       Swal.fire("Error", "Please enter all required transaction details", "error")
     } else {
-      this.apiService.getTransactions(transaction)
+      
+      this.apiService.addTransactions(transaction)
+      
         .subscribe(() => this.router.navigate(['transactions']))
-      Swal.fire("Success", "Transactions successfully added", "success"),
+      Swal.fire("Success", "Transactions successfully added", "success")
+      ,
         (err: any) => {
           Swal.fire("Error", err.error.message, "error")
         }
     }
+    
   }
 
   deleteTransaction():void {
