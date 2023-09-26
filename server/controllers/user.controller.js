@@ -80,11 +80,11 @@ const getUserInfo = asyncMiddleware(async (req, res) => {
 
     const user = req.user
     const id = req.params.id
-    console.log(id)
+    console.log("Backend get user info ",id)
 
     if( user?._id.toString() !== id ){
         res.status(401)
-        throw new Error("Not authorized, Invalid user")
+        throw new Error("Not authorizeddd, Invalid user")
     }
 
     const userInfo = await User.findById(user._id).select('-password')

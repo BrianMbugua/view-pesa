@@ -1,10 +1,11 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { navbarData } from './nav-data';
 import { faCashRegister, faChartSimple, faUser } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProfileComponent } from '../profile/profile.component';
 import { User } from 'src/app/models/user.model';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 
 interface SideNavToggle{
   screenWidth: number;
@@ -15,34 +16,21 @@ interface SideNavToggle{
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.css']
 })
-export class SidenavComponent {
+export class SidenavComponent implements OnInit {
 
-  currentUser: User = {};
   
-  constructor(private authService: AuthService, private actRoute: ActivatedRoute) {
-    // let id = this.actRoute.snapshot.paramMap.get('id');
-    // console.log("Snapshot id ", id)
-    // this.authService.getUserProfile(id).subscribe((res) => {
-    //   this.currentUser = res;
-      
-    //   console.log("Response ", this.currentUser._id)
-     
-    // });
-
-
-    
+  fetchId;
+  constructor(private authService: AuthService, private actRoute: ActivatedRoute, public profileId: ProfileComponent) {
+   
+    this.fetchId = this.profileId.fetchId
+    console.log(this.fetchId)
   }
+
+  
   
   ngOnInit() {
 
-    let id = this.actRoute.snapshot.paramMap.get('id');
-    console.log("Snapshot id ", id)
-    this.authService.getUserProfile(id).subscribe((res) => {
-      this.currentUser = res;
-      
-      console.log("Response ", this.currentUser._id)
-     
-    });
+    
 
   }
 

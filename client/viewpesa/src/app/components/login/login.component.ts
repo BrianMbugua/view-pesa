@@ -39,12 +39,7 @@ export class LoginComponent implements OnInit {
       return false;
     }
   }
-  // onLogin(){
-  //   let user = this.form.getRawValue();
-  //   console.log(user);
-  //   this.authService.onLogin(user)
 
-  // }
 
   submit(): void {
     let user = this.form.getRawValue();
@@ -62,18 +57,6 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/transactions'])
       });
 
-
-      // this.http.post("http://localhost:4000/api/users/loginUser", user, { withCredentials: true })
-      //   .subscribe(
-      //     (res) => {
-      //       console.log(res)
-      //       this.router.navigate(['/transactions'])
-      //       Emitters.authEmitter.emit(true);
-      //     }, 
-      //     (error) => {
-      //     Swal.fire("Error", error.error.message, "error")
-      //     Emitters.authEmitter.emit(false);
-      //   })
     }
   }
 }

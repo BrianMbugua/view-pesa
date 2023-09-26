@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -8,22 +8,24 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit {
   currentUser: User = {};
+  public fetchId: any;
+  
   constructor(
     public authService: AuthService,
     private actRoute: ActivatedRoute
   ) {
     
-  }
-  ngOnInit() {
-
     let id = this.actRoute.snapshot.paramMap.get('id');
     console.log("Profile page id ", id)
     this.authService.getUserProfile(id).subscribe((res) => {
       this.currentUser = res;
-      // console.log(this.currentUser._id)
+      this.fetchId = res._id;
+      
     });
+  }
+  ngOnInit() {
 
   }
 }

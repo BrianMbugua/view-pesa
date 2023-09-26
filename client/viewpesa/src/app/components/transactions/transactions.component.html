@@ -1,3 +1,4 @@
+<app-sidenav *ngIf="authService.isLoggedIn"></app-sidenav>
 <h4>Transactions</h4>
 <div class="card-all">
     <div class="card" *ngFor="let transaction of transactionData$ | async">

@@ -7,6 +7,7 @@ import { DataService } from 'src/app/services/data.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { TransactService } from 'src/app/services/transact.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-transactions',
@@ -23,7 +24,8 @@ export class TransactionsComponent {
     private formBuilder: FormBuilder,
     private http: HttpClient,
     private router: Router,
-    private apiService: ApiService, private transactService: TransactService) {
+    private apiService: ApiService, private transactService: TransactService,
+    public authService: AuthService) {
 
   }
 

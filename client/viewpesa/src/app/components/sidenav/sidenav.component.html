@@ -16,7 +16,7 @@
             </a>
         </li>
         <li>
-            <a class="sidenav-nav-link" [routerLink]="['/my-profile', this.currentUser._id]" routerLinkActive="active"
+            <a class="sidenav-nav-link" [routerLink]="['/my-profile', fetchId]" routerLinkActive="active"
                 [routerLinkActiveOptions]="{exact: true}">
                 <i>My </i>
                 <span class="sidenav-link-text" *ngIf="collapsed">My Profile</span>

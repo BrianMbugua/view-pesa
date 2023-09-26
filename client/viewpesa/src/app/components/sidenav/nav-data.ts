@@ -1,18 +1,18 @@
 
 export const navbarData = [
     {
-        routerLink: 'transactions',
+        routerLink: '/transactions',
         icon:'T',
         label: 'Transactions'
     },
     {
-        routerLink: 'visual-insights',
+        routerLink: '/visual-insights',
         icon:'Vi',
         label: 'Visual Insights'
     }
     // ,
     // {
-    //     routerLink: 'my-profile/:id',
+    //     routerLink: '/my-profile',
     //     icon:'P',
     //     label: 'My Profile'
     // }

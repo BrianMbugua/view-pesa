@@ -15,7 +15,7 @@ interface SideNavToggle {
 })
 export class AppComponent {
   title = 'viewpesa';
-
+  
   authenticated = false;
   isSideNavCollapsed = false;
   screenWidth = 0;
@@ -33,7 +33,7 @@ export class AppComponent {
   }
   
   ngOnInit() {
-    console.log(this.authService.isLoggedIn$)
+// console.log(this.authService.isLoggedIn$)
     // let checkToken = this.authService.getToken();
     // if (checkToken == null) { 
     //   this.router.navigate(['/login']);
