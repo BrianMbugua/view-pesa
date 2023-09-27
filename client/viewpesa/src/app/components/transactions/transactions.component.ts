@@ -28,7 +28,7 @@ export class TransactionsComponent {
   }
 
 
-  
+
 
   errorMessage(): void {
     Swal.fire("Error", "Error", "error")
@@ -40,7 +40,7 @@ export class TransactionsComponent {
   hideTransactionForm(): void {
     this.showForm = false;
   }
-  reloadPage(){
+  reloadPage() {
     window.location.reload()
   }
 
@@ -51,24 +51,21 @@ export class TransactionsComponent {
     if (transaction.category == "" || transaction.amount == "" || transaction.date == "") {
       Swal.fire("Error", "Please enter all required transaction details", "error")
     } else {
-      
+
       this.apiService.addTransactions(transaction)
-      
+
         .subscribe(() => this.router.navigate(['transactions']))
+
       Swal.fire("Success", "Transactions successfully added", "success")
-      ,
+        ,
         (err: any) => {
           Swal.fire("Error", err.error.message, "error")
         }
     }
-    
+
   }
 
-  deleteTransaction():void {
-    // this.transactService.deleteTransaction()
-  }
-
-  ngOnInit(): void {
+  getTransactions() {
     this.transactionData$ = this.transactService.getTransactions()
     this.form = this.formBuilder.group({
       category: "",
@@ -76,6 +73,14 @@ export class TransactionsComponent {
       date: "",
       description: ""
     })
+  }
+
+  deleteTransaction(): void {
+    // this.transactService.deleteTransaction()
+  }
+
+  ngOnInit(): void {
+    this.getTransactions() 
   }
 
 }

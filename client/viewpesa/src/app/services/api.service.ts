@@ -29,4 +29,12 @@ export class ApiService {
   getUserInfo(): Observable<any> {
     return this.httpClient.get(`http://localhost:4000/api/users/:id`)
   }
+
+  addWallet(wallet: any): Observable<any>{
+return this.httpClient.post(`http://localhost:4000/api/wallets`, wallet)
+  }
+
+  getWallets(wallets: any): Observable<any>{
+    return this.httpClient.get(`http://localhost:4000/api/wallets`, wallets)
+  }
 }

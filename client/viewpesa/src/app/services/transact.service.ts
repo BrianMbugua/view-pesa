@@ -17,4 +17,8 @@ export class TransactService {
   }
 
   deleteTransaction(transactions: any){}
+
+  getWallets() {
+    return this.apiService.getWallets("http://localhost:4000/api/wallets");
+  }
 }

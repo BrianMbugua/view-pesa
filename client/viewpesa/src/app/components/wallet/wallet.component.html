@@ -1,0 +1,43 @@
+
+<div class="wallet">
+    <h4>Wallet List</h4>
+    <div class="card-all">
+        <div class="card"  *ngFor="let wallet of walletData$ | async">
+            <div class="card-title">
+                <nav class="navbar navbar-expand-md navbar-dark  mb-4">
+                    <div class="container">
+                        <p class="card-title">{{wallet.name}}</p>
+                        <div>
+                            <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                                <li class="nav-item">
+                                    <button class="btn btn-info">Edit</button>
+                                </li>
+                                <li class="nav-item">
+                                    <button class="btn btn-danger">Delete</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+    
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                       
+                        <li class="list-group-item">
+                            <h4>BAL: {{wallet.amount}}</h4>
+                        </li>
+                        
+                        <li class="list-group-item"> 
+                           
+                        </li>
+                        <li class="list-group-item" >
+                            <span>Created at: {{wallet.createdAt}}</span>
+                        </li >
+                    </ul>
+    
+                </div>
+            </div>
+        </div>
+    
+    </div>
+</div>

@@ -6,7 +6,7 @@ const { addWallet,
         getWallet,
         updateWallet   } = require('../controllers/wallet.controller')
 
-walletRouter.route('/wallet')
+walletRouter.route('/')
     .all(authMiddleware)
     .get(getWallet)
     .post(addWallet)
