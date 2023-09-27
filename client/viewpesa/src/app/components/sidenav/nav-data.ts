@@ -1,6 +1,11 @@
 
 export const navbarData = [
     {
+        routerLink: 'home',
+        icon:'D',
+        label: 'Dashboard'
+    },
+    {
         routerLink: 'transactions',
         icon:'T',
         label: 'Transactions'

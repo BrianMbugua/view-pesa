@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
-const transactionSchema = new mongoose.Schema(
-    {
-        category: {
+const walletShema = new mongoose.Schema(
+    {   
+        name: {
             type: String,
             required: [true]
         },
@@ -10,6 +10,7 @@ const transactionSchema = new mongoose.Schema(
             type: Number,
             required: [true]
         },
+        
         description: {
             type: String,
         },
@@ -24,6 +25,6 @@ const transactionSchema = new mongoose.Schema(
     }
 )
 
-const Transaction = mongoose.model('Transaction', transactionSchema);
+const Wallet = mongoose.model('Wallet', walletShema);
 
-module.exports = Transaction;
+module.exports = Wallet;

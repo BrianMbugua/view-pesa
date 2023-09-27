@@ -1,7 +1,6 @@
 const asyncMiddleware = require('../middlewares/asyncMiddleware')
 const User = require('../models/user');
 const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
 const customJwt = require('../utils/jwt')
 
 const addUser = asyncMiddleware(async (req, res) => {

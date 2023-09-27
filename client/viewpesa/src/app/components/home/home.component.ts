@@ -26,16 +26,7 @@ export class HomeComponent implements OnInit {
     this.isSideNavCollapsed = data.collapsed;
   }
 
-  getHomeClass(): string {
-    let styleClass = '';
-    if(this.collapsed && this.screenWidth > 768){
-      styleClass = 'home-trimmed';
-    }else if(this.collapsed && this.screenWidth <= 768 && this.screenWidth > 0){
-      styleClass = 'home-md-screen';
-    }
-    return styleClass;
-  }
-
+  
   constructor(private http: HttpClient) { }
 
   ngOnInit(): void {

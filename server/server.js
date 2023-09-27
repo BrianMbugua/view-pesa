@@ -1,11 +1,11 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 
 const userRouter = require('./routes/user.routes');
 const transactionRouter = require('./routes/transaction.routes');
+const walletRouter = require('./routes/wallet.routes');
 
 const db = require('./config/db');
 const { getUsers, getUserInfo, addUser, updateUser, deleteUser, registerUser, loginUser } = require('./controllers/user.controller');
@@ -36,6 +36,7 @@ app.use(cookieParser());
 
 app.use("/api/users", userRouter);
 app.use("/api/transactions", transactionRouter);
+app.use("/api/wallets", walletRouter);
 
 app.use(errorMiddleware)
 app.listen(PORT, () => {
