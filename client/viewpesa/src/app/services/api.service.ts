@@ -37,4 +37,7 @@ return this.httpClient.post(`http://localhost:4000/api/wallets`, wallet)
   getWallets(wallets: any): Observable<any>{
     return this.httpClient.get(`http://localhost:4000/api/wallets`, wallets)
   }
+  deleteWallet(id:any){
+    return this.httpClient.delete(`http://localhost:4000/api/wallets/${id}`)
+  }
 }

@@ -53,6 +53,11 @@ export class WalletComponent {
     })
   }
 
+  deleteWallet(){
+    let id = this.walletData$.get("id")
+     this.transactService.deleteWallet()
+  }
+
   ngOnInit(): void {
     this.getWallets() 
   }

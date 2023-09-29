@@ -1,14 +1,21 @@
 const asyncMiddleware = require('../middlewares/asyncMiddleware')
 const Transaction = require('../models/transaction')
+const Wallet = require('../models/wallet')
+
+
 
 const addTransaction = asyncMiddleware( async(req, res) => {
-    const user = req.user
-    const {category, amount, date, description} = req.body
+
+    const getWallet = await Wallet.findOne({ name: req.body.wallet })
+
+    const walletOwner = getWallet
+    console.log("Wallet Owner", walletOwner )
+    const {category, amount, description, wallet} = req.body
 
     const created_transaction = await Transaction.create({
-        category, amount, date, description, owner: user._id
+        category, amount, description, wallet, owner: walletOwner._id
     })
-
+    console.log("Wallet Owner", walletOwner )
     res.status(201).send(created_transaction)
 })
  

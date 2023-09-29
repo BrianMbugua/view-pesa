@@ -1,6 +1,6 @@
 <h4>Transactions</h4>
 <div class="card-all">
-    <div class="card" *ngFor="let transaction of transactionData$ | async">
+    <!-- <div class="card">
         <div class="card-title">
             <nav class="navbar navbar-expand-md navbar-dark  mb-4">
                 <div class="container">
@@ -20,25 +20,55 @@
 
             <div class="card-body">
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item"> 
+                    <li class="list-group-item">
                         <h4>{{transaction.category}}</h4>
-                    </li >
+                    </li>
                     <li class="list-group-item">
                         <p>{{transaction.amount}}</p>
                     </li>
-                    <li class="list-group-item" >
+                    <li class="list-group-item">
                         <p>{{transaction.date}}</p>
-                    </li >
-                    <li class="list-group-item"> 
+                    </li>
+                    <li class="list-group-item">
                         <p>{{transaction.description}}</p>
                     </li>
                 </ul>
 
             </div>
         </div>
-    </div>
-
+    </div> -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Category</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let transaction of transactionData$ | async">
+                <th scope="row">1</th>
+                <td>
+                    <h4>{{transaction.category}}</h4>
+                </td>
+                <td>
+                    <p>{{transaction.amount}}</p>
+                </td>
+                <td>
+                    <p>{{transaction.description}}</p>
+                </td>
+                <td>
+                    <button class="btn btn-info">Edit</button>
+                    <button class="btn btn-danger" (click)="deleteTransaction()">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
+
+
+
 <br>
 <div class="container">
     <button class="w-20 btn btn-lg btn-info" (click)="showTransactionForm()" *ngIf="!showForm">Add

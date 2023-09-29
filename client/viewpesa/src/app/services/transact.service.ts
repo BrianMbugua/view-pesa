@@ -21,4 +21,8 @@ export class TransactService {
   getWallets() {
     return this.apiService.getWallets("http://localhost:4000/api/wallets");
   }
+
+  deleteWallet(){
+    return this.apiService.deleteWallet("http://localhost:4000/api/wallets/:id");
+  }
 }

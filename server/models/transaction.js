@@ -13,10 +13,14 @@ const transactionSchema = new mongoose.Schema(
         description: {
             type: String,
         },
+        wallet: {
+            type: String,
+            required: [true]
+        },
         owner: {
             type: mongoose.Schema.Types.ObjectId,
             required: [true],
-            ref: "User"
+            ref: "Wallet"
         }
     },
     {

@@ -4,7 +4,12 @@ const bcrypt = require('bcryptjs')
 const customJwt = require('../utils/jwt')
 
 const addWallet = asyncMiddleware(async(req, res) => {
-    const wallet = await Wallet.create(req.body)
+    const user = req.user
+    const {name, amount, description} = req.body
+
+    const wallet = await Wallet.create({
+        name, amount, description, owner: user._id
+    })
     res.status(201).json(wallet)
 })
 
