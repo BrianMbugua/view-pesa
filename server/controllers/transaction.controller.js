@@ -8,20 +8,20 @@ const addTransaction = asyncMiddleware( async(req, res) => {
 
     const getWallet = await Wallet.findOne({ name: req.body.wallet })
 
-    const walletOwner = getWallet
-    console.log("Wallet Owner", walletOwner )
+    console.log("Wallet Owner", getWallet.owner )
     const {category, amount, description, wallet} = req.body
 
     const created_transaction = await Transaction.create({
-        category, amount, description, wallet, owner: walletOwner._id
+        category, amount, description, wallet, owner: getWallet._id
     })
-    console.log("Wallet Owner", walletOwner )
+    
     res.status(201).send(created_transaction)
 })
  
 const getTransactions = asyncMiddleware( async(req, res) => {
-    const user = req.user
-    const transactions = await Transaction.find({ owner: user._id })
+    const wallet = await Wallet.findOne({ name: 'M-PESA' })
+    console.log("Get transactions request body ",req)
+    const transactions = await Transaction.find({ owner: wallet._id })
     res.status(201).send(transactions)
 })
 

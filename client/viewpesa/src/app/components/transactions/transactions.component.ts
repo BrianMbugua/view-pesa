@@ -15,7 +15,6 @@ import { TransactService } from 'src/app/services/transact.service';
 })
 export class TransactionsComponent {
   form: FormGroup;
-  transactionData: any;
   transactionData$: any;
   showForm: boolean = false;
 

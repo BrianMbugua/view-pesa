@@ -19,7 +19,9 @@ export class ApiService {
   }
 
   getTransactions(transaction: any): Observable<any> {
+    console.log("Get transaction client side ",transaction)
     return this.httpClient.get('http://localhost:4000/api/transactions', transaction)
+    
   }
 
   addTransactions(transaction: any): Observable<any> {
