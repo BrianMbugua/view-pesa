@@ -8,12 +8,28 @@ const addTransaction = asyncMiddleware( async(req, res) => {
 
     const getWallet = await Wallet.findOne({ name: req.body.wallet })
 
-    console.log("Wallet Owner", getWallet.owner )
+    // console.log("Wallet Owner", getWallet.owner )
     const {category, amount, description, wallet} = req.body
 
     const created_transaction = await Transaction.create({
         category, amount, description, wallet, owner: getWallet._id
     })
+
+
+
+    //Transaction impact Calculation
+    let new_balance = created_transaction.amount + getWallet.amount
+    console.log("New Balance ", new_balance )
+    const { id } = getWallet._id;
+    console.log("get wallet id:", getWallet._id )
+    const wallet_transaction = await Wallet.findByIdAndUpdate(id, {
+        amount: new_balance
+    }, {new: true});
+    if (!wallet_transaction) {
+        throw new Error({ message: `Not found` })
+    }
+    // const updatedWallet = await Wallet.findById(id);
+    console.log("Updated wallet ", wallet_transaction )
     
     res.status(201).send(created_transaction)
 })
@@ -65,5 +81,5 @@ module.exports = {
     addTransaction, 
     getTransactions,
     updateTransaction,
-    deleteTransaction
+    deleteTransaction,
 }

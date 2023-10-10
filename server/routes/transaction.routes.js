@@ -7,7 +7,9 @@ transactionRouter
     .route('/')
     .all(authMiddleware)
     .get(getTransactions)
+    .put(addTransaction)
     .post(addTransaction)
+    
 
 transactionRouter
     .route('/:id')
