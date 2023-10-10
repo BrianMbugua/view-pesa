@@ -14,8 +14,13 @@ const addWallet = asyncMiddleware(async(req, res) => {
 })
 
 const getWallet = asyncMiddleware(async (req, res) => {
-
-    const wallet = await Wallet.find({});
+    const user = req.user
+    const wallet = await Wallet.find({ owner: user._id.toString() });
+    if(wallet !== null){
+        console.log(wallet)
+    }else{
+        console.log("Not found wallet")
+    }
     res.status(200).json(wallet)
     
 } ) 
