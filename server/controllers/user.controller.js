@@ -79,7 +79,7 @@ const getUserInfo = asyncMiddleware(async (req, res) => {
 
     const user = req.user
     const id = req.params.id
-    console.log(id)
+    // console.log(id)
 
     if( user?._id.toString() !== id ){
         res.status(401)

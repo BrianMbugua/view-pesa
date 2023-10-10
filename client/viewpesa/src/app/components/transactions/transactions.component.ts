@@ -45,15 +45,14 @@ export class TransactionsComponent {
 
   submit(): void {
     let transaction = this.form.getRawValue();
-    console.log(transaction);
+    console.log("TransactComp: Form Data: ", transaction);
 
-    if (transaction.category == "" || transaction.amount == "" || transaction.date == "") {
+    if (transaction.category == "" || transaction.amount == "" || transaction.wallet == "") {
       Swal.fire("Error", "Please enter all required transaction details", "error")
     } else {
-
       this.apiService.addTransactions(transaction)
 
-        .subscribe(() => this.router.navigate(['transactions']))
+        .subscribe(() => this.router.navigate(['/visual-insights']))
 
       Swal.fire("Success", "Transactions successfully added", "success")
         ,
@@ -67,9 +66,9 @@ export class TransactionsComponent {
   getTransactions() {
     this.transactionData$ = this.transactService.getTransactions()
     this.form = this.formBuilder.group({
+      wallet: "",
       category: "",
       amount: "",
-      date: "",
       description: ""
     })
   }
