@@ -47,7 +47,7 @@ export class TransactionsComponent {
     let transaction = this.form.getRawValue();
     console.log("TransactComp: Form Data: ", transaction);
 
-    if (transaction.category == "" || transaction.amount == "" || transaction.wallet == "") {
+    if (transaction.category == "" || transaction.amount == "" || transaction.wallet == "" || transaction.description == "") {
       Swal.fire("Error", "Please enter all required transaction details", "error")
     } else {
       this.apiService.addTransactions(transaction)

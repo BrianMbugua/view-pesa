@@ -7,33 +7,39 @@ const Wallet = require('../models/wallet')
 const addTransaction = asyncMiddleware( async(req, res) => {
 
     const getWallet = await Wallet.findOne({ name: req.body.wallet })
-
+    const id = getWallet._id;
     
     const {category, amount, description, wallet} = req.body
+    
+    if(category == "Income"){
+        let plus_balance = amount + getWallet.amount
+        await Wallet.findByIdAndUpdate(id, {
+            amount: plus_balance
+            }, {new: true});
+            console.log("New Balance ",plus_balance)
 
-    //Transaction impact Calculation
-    let new_balance = amount + getWallet.amount
-    // 
-    const id = getWallet._id;
-    console.log("New Balance ",id )
-    
-    const wallet_transaction = await Wallet.findByIdAndUpdate(id, {
-    amount: new_balance
-    }, {new: true});
-    if (!wallet_transaction) {
-        throw new Error({ message: `Not found` })
+            const created_transaction = await Transaction.create({
+                category, amount, description, wallet, owner: getWallet._id
+            })
+            console.log("Backend transaction", created_transaction )
+            res.status(201).send(created_transaction)
+    }else if(category == "Expense"){
+        let minus_balance = getWallet.amount - amount 
+        await Wallet.findByIdAndUpdate(id, {
+            amount: minus_balance
+            }, {new: true});
+            console.log("New Balance ",minus_balance)
+            const created_transaction = await Transaction.create({
+                category, amount, description, wallet, owner: getWallet._id
+            })
+            console.log("Backend transaction", created_transaction )
+            res.status(201).send(created_transaction)
+        
+    }else{
+        throw new Error({ message: `Invalid category` })
     }
-    
-    
-    console.log("wallet_transaction: ", wallet_transaction )
-   
-    // const updatedWallet = await Wallet.findById(id);
-    // console.log("Updated wallet ", wallet_transaction )
-    const created_transaction = await Transaction.create({
-        category, amount, description, wallet, owner: getWallet._id
-    })
-    console.log("Backend transaction", created_transaction )
-    res.status(201).send(created_transaction)
+
+
 })
  
 const getTransactions = asyncMiddleware( async(req, res) => {
