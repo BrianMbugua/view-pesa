@@ -25,7 +25,12 @@ export class WalletComponent {
   reloadPage() {
     window.location.reload()
   }
-
+  displayForm(){
+    this.showForm = true;
+  }
+  hideForm(){
+    this.showForm = false;
+  }
   submit(): void {
     let wallet = this.form.getRawValue();
 
