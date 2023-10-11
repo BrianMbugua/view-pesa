@@ -43,10 +43,10 @@ export class WalletComponent {
     } else {
 
       this.apiService.addWallet(wallet)
-      .subscribe(() => this.router.navigate(['/wallet']))
-      console.log(wallet)
-      // this.reloadPage()
-      Swal.fire("Success", "Wallet Added", "success"),
+      .subscribe()
+      Swal.fire("Success", "Wallet Added", "success")
+      this.reloadPage()
+      ,
 
         (err: any) => {
           Swal.fire("Error", err.error.message, "error")
