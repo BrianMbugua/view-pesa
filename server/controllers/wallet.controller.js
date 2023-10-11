@@ -5,19 +5,20 @@ const customJwt = require('../utils/jwt')
 
 const addWallet = asyncMiddleware(async(req, res) => {
     const user = req.user
-    const {name, amount, description} = req.body
-
+    const { name, amount, description } = req.body
+    console.log("Body wallet")
     const wallet = await Wallet.create({
         name, amount, description, owner: user._id
     })
-    res.status(201).json(wallet)
+    res.status(201).send(wallet)
+    
 })
 
 const getWallet = asyncMiddleware(async (req, res) => {
     const user = req.user
     const wallet = await Wallet.find({ owner: user._id.toString() });
     if(wallet !== null){
-        console.log(wallet)
+       // console.log(wallet)
     }else{
         console.log("Not found wallet")
     }

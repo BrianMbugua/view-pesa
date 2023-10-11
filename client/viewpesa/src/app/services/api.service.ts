@@ -25,7 +25,7 @@ export class ApiService {
   }
 
   addTransactions(transaction: any): Observable<any> {
-    console.log("APIServiceTS: Transaction heading to backend ", transaction)
+    
     return this.httpClient.post('http://localhost:4000/api/transactions', transaction)
   }
 
@@ -34,7 +34,8 @@ export class ApiService {
   }
 
   addWallet(wallet: any): Observable<any>{
-return this.httpClient.post(`http://localhost:4000/api/wallets`, wallet)
+    console.log("APIServiceTS: Wallet heading to backend ", wallet)
+    return this.httpClient.post(`http://localhost:4000/api/wallets`, wallet)
   }
 
   getWallets(wallets: any): Observable<any>{

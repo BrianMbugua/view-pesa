@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { TransactService } from 'src/app/services/transact.service';
 import Swal from 'sweetalert2';
@@ -17,7 +18,10 @@ export class WalletComponent {
   showForm: boolean = false;
   walletData$: any;
 
-  constructor(private http: HttpClient, private formBuilder: FormBuilder, private apiService: ApiService, private transactService: TransactService) { }
+  constructor(private http: HttpClient, private formBuilder: FormBuilder, 
+    private apiService: ApiService, 
+    private router: Router,
+    private transactService: TransactService) { }
 
   errorMessage(): void {
     Swal.fire("Error", "Error", "error")
@@ -39,7 +43,9 @@ export class WalletComponent {
     } else {
 
       this.apiService.addWallet(wallet)
-      this.reloadPage()
+      .subscribe(() => this.router.navigate(['/wallet']))
+      console.log(wallet)
+      // this.reloadPage()
       Swal.fire("Success", "Wallet Added", "success"),
 
         (err: any) => {
@@ -53,7 +59,6 @@ export class WalletComponent {
     this.form = this.formBuilder.group({
       name: "",
       amount: "",
-      date: "",
       description: ""
     })
   }
