@@ -40,15 +40,15 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th scope="col">#</th>
                 <th scope="col">Category</th>
                 <th scope="col">Amount</th>
                 <th scope="col">Description</th>
+                <th scope="col">Wallet</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let transaction of transactionData$ | async">
-                <th scope="row">1</th>
+            <tr *ngFor="let transaction of transactionData$[0]">
+               
                 <td>
                     <h4>{{transaction.category}}</h4>
                 </td>
@@ -66,7 +66,82 @@
                     <button class="btn btn-danger" (click)="deleteTransaction()">Delete</button>
                 </td>
             </tr>
-        </tbody>
+            <tr *ngFor="let transaction of transactionData$[1]">
+               
+                <td>
+                    <h4>{{transaction.category}}</h4>
+                </td>
+                <td>
+                    <p>{{transaction.amount}}</p>
+                </td>
+                <td>
+                    <p>{{transaction.description}}</p>
+                </td>
+                <td>
+                    <p>{{transaction.wallet}}</p>
+                </td>
+                <td>
+                    <button class="btn btn-info">Edit</button>
+                    <button class="btn btn-danger" (click)="deleteTransaction()">Delete</button>
+                </td>
+            </tr>
+            <tr *ngFor="let transaction of transactionData$[2]">
+               
+                <td>
+                    <h4>{{transaction.category}}</h4>
+                </td>
+                <td>
+                    <p>{{transaction.amount}}</p>
+                </td>
+                <td>
+                    <p>{{transaction.description}}</p>
+                </td>
+                <td>
+                    <p>{{transaction.wallet}}</p>
+                </td>
+                <td>
+                    <button class="btn btn-info">Edit</button>
+                    <button class="btn btn-danger" (click)="deleteTransaction()">Delete</button>
+                </td>
+            </tr>
+            <tr *ngFor="let transaction of transactionData$[3]">
+               
+                <td>
+                    <h4>{{transaction.category}}</h4>
+                </td>
+                <td>
+                    <p>{{transaction.amount}}</p>
+                </td>
+                <td>
+                    <p>{{transaction.description}}</p>
+                </td>
+                <td>
+                    <p>{{transaction.wallet}}</p>
+                </td>
+                <td>
+                    <button class="btn btn-info">Edit</button>
+                    <button class="btn btn-danger" (click)="deleteTransaction()">Delete</button>
+                </td>
+            </tr>
+            <tr *ngFor="let transaction of transactionData$[4]">
+               
+                <td>
+                    <h4>{{transaction.category}}</h4>
+                </td>
+                <td>
+                    <p>{{transaction.amount}}</p>
+                </td>
+                <td>
+                    <p>{{transaction.description}}</p>
+                </td>
+                <td>
+                    <p>{{transaction.wallet}}</p>
+                </td>
+                <td>
+                    <button class="btn btn-info">Edit</button>
+                    <button class="btn btn-danger" (click)="deleteTransaction()">Delete</button>
+                </td>
+            </tr>        </tbody>
     </table>
 </div>
 

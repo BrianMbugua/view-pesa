@@ -1,13 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, catchError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) { 
+    
+  }
 
   
   onLogin(obj:any): Observable<any> {
@@ -18,9 +20,14 @@ export class ApiService {
     return this.httpClient.post('http://localhost:4000/api/users/registerUser', obj)
   }
 
-  getTransactions(transaction: any): Observable<any> {
+  public getTransactions(): Observable<any> {
     // console.log("Get transaction client side ",transaction)
-    return this.httpClient.get('http://localhost:4000/api/transactions', transaction)
+    return this.httpClient.get('http://localhost:4000/api/transactions').pipe(
+      catchError((err, caught) => {
+        console.log(err);
+        return caught;
+      })
+    );
     
   }
 

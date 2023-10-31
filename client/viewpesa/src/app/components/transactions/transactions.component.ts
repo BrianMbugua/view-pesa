@@ -7,6 +7,7 @@ import { DataService } from 'src/app/services/data.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { TransactService } from 'src/app/services/transact.service';
+import { Transaction } from 'src/app/models/transaction.model';
 
 @Component({
   selector: 'app-transactions',
@@ -15,7 +16,7 @@ import { TransactService } from 'src/app/services/transact.service';
 })
 export class TransactionsComponent {
   form: FormGroup;
-  transactionData$: any;
+  public transactionData$:any = {};
   showForm: boolean = false;
 
   constructor(private dataService: DataService,
@@ -62,16 +63,23 @@ export class TransactionsComponent {
     }
 
   }
-
-  getTransactions() {
-    this.transactionData$ = this.transactService.getTransactions()
-    this.form = this.formBuilder.group({
-      wallet: "",
-      category: "",
-      amount: "",
-      description: ""
-    })
+  // 
+    
+  getTransactions(){
+    this.apiService.getTransactions().subscribe((transactions) => {
+      this.transactionData$ = transactions
+      console.log(transactions[0])
+      this.form = this.formBuilder.group({
+        wallet: "",
+        category: "",
+        amount: "",
+        description: ""
+      })
+    },
+    (error) => console.log(error))
   }
+    
+   
 
   deleteTransaction(): void {
     // this.transactService.deleteTransaction()
@@ -79,6 +87,7 @@ export class TransactionsComponent {
 
   ngOnInit(): void {
     this.getTransactions() 
+   
   }
 
 }
